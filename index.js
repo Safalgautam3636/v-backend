@@ -3,7 +3,7 @@ const app=express();
 app.use(express.json());
 let courses=[{id:1,name:"Safal",book:"dance"},
                 {id:2,name:"Sujan",book:"singh"},
-                {id:3,name:"Rahul",book:"USA"}]
+                {id:3,name:"Rahul",book:"americaSA"}]
                  courses = JSON.parse(JSON.stringify(courses));
 app.use(express.json());
 app.get('/api/courses/:id',(req,res)=>{
