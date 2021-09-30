@@ -1,49 +1,30 @@
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
-const genres=require('./routes/genres');
-const courses=require('./routes/customers');
+const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+const users=require('./routes/users')
+const auth=require('./routes/auth')
+
 app.use(express.json());
-// mongoose.connect('mongodb://localhost/vidly').then(()=>console.log("connected to db."))
-//     .catch((e)=>{console.log("couldnot connected to db..",e)});
-// app.use('/api/genres/',genres);
-mongoose.connect('mongodb://localhost/shopdbs').then(()=>console.log("connected to db.."))
-.catch((err)=>console.log("Error arissed ",err))
-app.use('/api/courses',courses);
-// app.get('/api/courses/:id',(req,res)=>{
-//     const course=courses.find(c=>c.id===parseInt(req.params.id));
-//     if(!course)return res.status(404).send("Please check if such course is available or not..")
-//     res.send(course);
-   
-// });
-// app.post('/api/courses',(req,res)=>{
-    
-//     const course = {
-//         id: (courses.length + 1), 
-//         name: req.body.name,
-//         book:req.body.book
-//     };
-//     courses.push(course);
-//     res.send(course);
-// })
 
-// app.put('/api/courses/:id',(req,res)=>{
-//     const course=courses.find(c=>c.id===parseInt(req.params.id));
-//     if(!course){res.status(404).send("Please check if such course is available or not..");
-//         return;    
-//     }
-//     course.name=req.body.name;
-//     course.book=req.body.book;
-//     res.send(course)
+app.use('/api/genres', genres);
+app.use('/api/customers', customers);
+app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
+app.use('/api/users',users)
+app.use('/api/auth',auth)
 
-// })
-// app.delete('/api/courses/:id',(req,res)=>{
-//     const course=courses.find(c=>c.id===parseInt(req.params.id));
-//     if(!course)return res.status(404).send("Please check if such course is available or not..");
+mongoose.connect('mongodb://localhost/vidly',
+                    { useNewUrlParser: true ,
+                    useUnifiedTopology: true,
+                    useCreateIndex: true,
+                    useFindAndModify: false})
+    .then(()=>console.log("connected to db."))
+    .catch((e)=>{console.log("couldnot connected to db..",e)});
+    mongoose.set('useUnifiedTopology', true);
 
-//     const index=courses.indexOf(course);
-//     courses.slice(index,1);
-//     res.send(course);
-// })
 const port=process.env.PORT||3000;
 app.listen(port,()=>{console.log(`Server is up and running ${port}`)});
